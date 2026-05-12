@@ -8,7 +8,6 @@ services:
 
   ldap-ui:
     image: ghcr.io/bavxhack/ldap-ui:latest
-    build: .
     ports:
       - 127.0.0.1:5000:5000
     links:
