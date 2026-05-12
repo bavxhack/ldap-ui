@@ -1,30 +1,20 @@
 <template>
-  <div id="app">
+  <div id="app" class="pb-6">
     <nav-bar v-model:treeOpen="treeOpen" v-model:modal="modal" v-model:oc="oc" v-model:activeDn="activeDn" />
     <ldif-import-dialog v-model:modal="modal" @ok="activeDn = '-'" />
 
-    <div class="flex container">
-      <!-- left column -->
-      <div class="space-y-4">
-        <tree-view v-model:activeDn="activeDn" v-show="treeOpen" />
+    <main class="mx-auto mt-4 grid max-w-[1600px] grid-cols-1 gap-4 px-3 lg:grid-cols-[380px,1fr]">
+      <aside class="space-y-4" v-show="treeOpen">
+        <tree-view v-model:activeDn="activeDn" />
         <object-class-card v-model="oc" @show-attr="attr = $event" />
         <attribute-card v-model="attr" />
-      </div>
+      </aside>
 
-      <!-- main editor -->
-      <div class="flex-auto mt-4">
+      <section class="min-h-[70vh]">
         <notification v-model:alert="state.alert" />
         <entry-editor v-model:activeDn="activeDn" @show-attr="attr = $event" @show-oc="oc = $event" />
-      </div>
-    </div>
-
-    <div v-if="false"><!-- Not rendered, prevents color pruning -->
-      <span class="text-primary bg-primary"></span>
-      <span class="text-back bg-back"></span>
-      <span class="text-danger bg-danger"></span>
-      <span class="text-front bg-front"></span>
-      <span class="text-secondary bg-secondary"></span>
-    </div>
+      </section>
+    </main>
   </div>
 </template>
 
@@ -40,11 +30,11 @@ import TreeView from "./components/TreeView.vue";
 import { state } from "./state";
 
 const
-  treeOpen = ref(true), // Is the tree visible?
-  activeDn = ref<string>(), // currently active DN in the editor
-  oc = ref<string>(), // objectClass info in side panel
-  attr = ref<string>(), // attribute info in side panel
-  modal = ref<string>(); // modal popup ID
+  treeOpen = ref(true),
+  activeDn = ref<string>(),
+  oc = ref<string>(),
+  attr = ref<string>(),
+  modal = ref<string>();
 
 watch(attr, (a) => {
   if (a) oc.value = undefined;
@@ -56,17 +46,17 @@ watch(oc, (o) => {
 
 <style>
 .control {
-  @apply opacity-70 hover:opacity-90 cursor-pointer select-none leading-none pt-1 pr-1;
+  @apply cursor-pointer select-none leading-none opacity-70 hover:opacity-100;
 }
 
 button,
 .btn,
 [type="button"] {
-  @apply px-3 py-2 rounded text-back dark:text-front font-medium outline-none;
+  @apply rounded-xl px-3 py-2 font-medium text-back outline-none transition;
 }
 
 button.btn {
-  @apply border-solid border-back border-2 focus:border-primary dark:focus:border-front;
+  @apply border-2 border-transparent focus:border-primary;
 }
 
 select {
@@ -77,15 +67,5 @@ select {
 .glyph {
   font-family: sans-serif, FontAwesome;
   font-style: normal;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
