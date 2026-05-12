@@ -9,7 +9,7 @@
         </button>
 
         <div class="flex items-center gap-3">
-          <img src="/brand-mark.svg" alt="LDAP UI" class="h-9 w-9 rounded-xl shadow" />
+          <img src="https://app.meetling.de/theme/app_meetling_de/meetling.png" alt="LDAP UI" class="h-9 w-9 rounded-xl shadow" />
           <div>
             <p class="text-xs uppercase tracking-[0.22em] text-front/60">Directory Studio</p>
             <p class="text-base font-semibold">LDAP UI</p>
